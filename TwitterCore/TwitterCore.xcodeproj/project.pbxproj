@@ -133,8 +133,8 @@
 		9D30C5591ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5571ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D30C55A1ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5571ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D30C55B1ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D30C5581ACE318C00D0B1FA /* TWTRAPINetworkErrorsShim.m */; };
-		9D30C5651ACE336D00D0B1FA /* TWTRUserAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5631ACE336D00D0B1FA /* TWTRUserAPIClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		9D30C5661ACE336D00D0B1FA /* TWTRUserAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5631ACE336D00D0B1FA /* TWTRUserAPIClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9D30C5651ACE336D00D0B1FA /* TWTRUserAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5631ACE336D00D0B1FA /* TWTRUserAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D30C5661ACE336D00D0B1FA /* TWTRUserAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C5631ACE336D00D0B1FA /* TWTRUserAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D30C5671ACE336D00D0B1FA /* TWTRUserAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D30C5641ACE336D00D0B1FA /* TWTRUserAPIClient.m */; };
 		9D30C56C1ACE339900D0B1FA /* TWTRGCOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C56A1ACE339900D0B1FA /* TWTRGCOAuth.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D30C56D1ACE339900D0B1FA /* TWTRGCOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D30C56A1ACE339900D0B1FA /* TWTRGCOAuth.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -166,11 +166,11 @@
 		9D5645451ACE2D7100633C16 /* TWTRGuestAuthProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645431ACE2D7100633C16 /* TWTRGuestAuthProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D5645461ACE2D7100633C16 /* TWTRGuestAuthProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645431ACE2D7100633C16 /* TWTRGuestAuthProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D5645471ACE2D7100633C16 /* TWTRGuestAuthProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5645441ACE2D7100633C16 /* TWTRGuestAuthProvider.m */; };
-		9D56454B1ACE2D8900633C16 /* TWTRAppAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645491ACE2D8900633C16 /* TWTRAppAPIClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		9D56454C1ACE2D8900633C16 /* TWTRAppAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645491ACE2D8900633C16 /* TWTRAppAPIClient.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9D56454B1ACE2D8900633C16 /* TWTRAppAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645491ACE2D8900633C16 /* TWTRAppAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D56454C1ACE2D8900633C16 /* TWTRAppAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645491ACE2D8900633C16 /* TWTRAppAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D56454D1ACE2D8900633C16 /* TWTRAppAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D56454A1ACE2D8900633C16 /* TWTRAppAPIClient.m */; };
-		9D5645571ACE2DDD00633C16 /* TWTRNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645551ACE2DDD00633C16 /* TWTRNetworking.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		9D5645581ACE2DDD00633C16 /* TWTRNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645551ACE2DDD00633C16 /* TWTRNetworking.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9D5645571ACE2DDD00633C16 /* TWTRNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645551ACE2DDD00633C16 /* TWTRNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D5645581ACE2DDD00633C16 /* TWTRNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5645551ACE2DDD00633C16 /* TWTRNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D5645591ACE2DDD00633C16 /* TWTRNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5645561ACE2DDD00633C16 /* TWTRNetworking.m */; };
 		9D56455D1ACE2DF600633C16 /* TWTRCoreConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D56455B1ACE2DF600633C16 /* TWTRCoreConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D56455E1ACE2DF600633C16 /* TWTRCoreConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D56455B1ACE2DF600633C16 /* TWTRCoreConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };

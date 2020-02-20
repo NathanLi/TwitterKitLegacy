@@ -7,10 +7,10 @@ Pod::Spec.new do |s|
   s.social_media_url = "https://twitter.com/TwitterDev"
   s.authors = "Twitter"
   s.platforms = { :ios => "9.0", :tvos => "9.0" }
-  s.source = { :http => "https://ton.twimg.com/syndication/twitterkit/ios/#{s.version}/TwitterCore.zip" }
+  s.source = { :git => "https://github.com/twitter-archive/twitter-kit-ios.git", :tag => "v#{s.version}" }
   s.license = { :type => "Commercial", :text => "Copyright Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Twitter Kit Agreement located at https://dev.twitter.com/overview/terms/twitterkit and the Developer Agreement located at https://dev.twitter.com/overview/terms/agreement. OSS: https://github.com/twitter/twitter-kit-ios/blob/master/OS_LICENSES.md" }
-  s.ios.vendored_frameworks = "iOS/TwitterCore.framework"
-  s.tvos.vendored_frameworks = "tvOS/TwitterCore.framework"
+  s.source_files = ["TwitterCore/**/*.{h,m}", "libextobjc/**/*.h", "TwitterCore-dynamic/TwitterCore.h"]
+  s.prefix_header_file = "TwitterCore/Supporting Files/TwitterCore-Prefix.pch"
   s.ios.frameworks = "Accounts", "CoreData", "CoreGraphics", "Foundation", "Security", "Social", "UIKit"
   s.tvos.frameworks = "CoreData", "CoreGraphics", "Foundation", "Security", "UIKit"
 end

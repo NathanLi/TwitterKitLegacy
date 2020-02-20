@@ -24,6 +24,7 @@
 #error "TwitterCore doesn't support iOS 7.x and lower. Please, change your minimum deployment target to iOS 8.0"
 #endif
 
+#import "TWTRAppAPIClient.h"
 #import "TWTRAPIErrorCode.h"
 #import "TWTRAuthConfig.h"
 #import "TWTRAuthSession.h"

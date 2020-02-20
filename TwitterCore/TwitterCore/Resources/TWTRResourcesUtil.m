@@ -35,7 +35,8 @@ static NSString *kitVersion;
 
     // Doing [self class] here so it works across targets. Otherwise kitBundle might not be what
     // you expect
-    NSBundle *bundle1 = [NSBundle bundleForClass:[self class]];
+    Class clazz = NSClassFromString(@"TWTRTwitter") ?: [self class];
+    NSBundle *bundle1 = [NSBundle bundleForClass:clazz];
     NSBundle *bundle = [NSBundle bundleWithPath:[bundle1 pathForResource:bundleName ofType:bundleType]];
     return bundle;
 }

@@ -16,7 +16,6 @@
  */
 
 #import "TWTRMoPubNativeAdContainerView.h"
-#import <MoPub/MPNativeAdRendering.h>
 #import <TwitterCore/TWTRColorUtil.h>
 #import "TWTRMoPubAdDisclaimerView.h"
 #import "TWTRMoPubNativeAdView.h"
@@ -38,7 +37,7 @@ static const CGFloat TWTRMoPubAdViewBorderWidth = 0.5;
  *  themeable view properties of the ad cell and its underlying ad view(s). Conforming to `UIAppearanceContainer`
  *  also works around the lack of access to `TWTRMoPubNativeAdContainerView` during ad initialization.
  */
-@interface TWTRMoPubNativeAdContainerView () <MPNativeAdRendering>
+@interface TWTRMoPubNativeAdContainerView () 
 
 @property (nonatomic, readonly, nonnull) TWTRMoPubNativeAdView *adView;
 @property (nonatomic, readonly, nonnull) TWTRMoPubAdDisclaimerView *disclaimerView;

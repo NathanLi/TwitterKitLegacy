@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.prefix_header_file = "TwitterKit/TwitterKit/Supporting Files/TwitterKit-Prefix.pch"
   s.resources = ["TwitterKit/TwitterKitResources.bundle"]
   s.frameworks = "CoreText", "QuartzCore", "CoreData", "CoreGraphics", "Foundation", "Security", "UIKit", "CoreMedia", "AVFoundation", "SafariServices", "WebKit"
-  s.dependency "TwitterCoreLegacy", ">= 3.1.0"
+  s.dependency "TwitterCoreLegacy", ">= 3.5.0"
 end

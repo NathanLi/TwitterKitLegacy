@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.social_media_url = "https://twitter.com/TwitterDev"
   s.authors = "Twitter"
   s.platform = :ios, "9.0"
-  s.source = { :git => "https://github.com/igor-makarov/TwitterKitLegacy.git", :tag => "v#{s.version}" }
+  s.source = { :git => "https://github.com/NathanLi/TwitterKitLegacy.git", :tag => "v#{s.version}" }
   s.license = { :type => 'Apache 2.0', :file => "LICENSE" }
   s.module_name = "TwitterKit"
   s.source_files = ["TwitterKit/TwitterKit/**/*.{h,m}", "TwitterKit/libextobjc/**/*.h", "TwitterKit/TwitterKit-dynamic/TwitterKit.h"]

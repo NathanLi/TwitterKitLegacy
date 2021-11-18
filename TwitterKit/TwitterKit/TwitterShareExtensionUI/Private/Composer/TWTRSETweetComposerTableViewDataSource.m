@@ -26,7 +26,6 @@
 
 @property (nonatomic, nullable, readonly, copy) TWTRSETweet *initialTweet;
 @property (readonly, nonatomic) BOOL allowsAccountSelection;
-@property (readonly, nonatomic) BOOL allowsGeoTagging;
 
 // Type: [NSNumber<TWTRSETweetComposerTableViewDataSourceCellType>]
 @property (nonatomic) NSArray<NSNumber *> *cellTypes;
@@ -38,7 +37,7 @@
 
 @implementation TWTRSETweetComposerTableViewDataSource
 
-- (instancetype)initWithConfiguration:(TWTRSETweetShareConfiguration *)config allowsGeoTagging:(BOOL)allowsGeoTagging
+- (instancetype)initWithConfiguration:(TWTRSETweetShareConfiguration *)config
 {
     NSParameterAssert(config);
 
@@ -46,8 +45,6 @@
         _initialTweet = [config.initialTweet copy] ?: [TWTRSETweet emptyTweet];
         _composedTweet = [_initialTweet copy];
         _allowsAccountSelection = config.accounts.count > 1;
-        _allowsGeoTagging = allowsGeoTagging;
-        _locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown;
         _textSelection = (NSRange){.location = NSNotFound, .length = 0};
 
         [self createCellTypes];
@@ -62,10 +59,6 @@
 
     if (self.allowsAccountSelection) {
         [types addObject:@(TWTRSETweetComposerTableViewDataSourceCellTypeAccountSelector)];
-    }
-
-    if (self.allowsGeoTagging) {
-        [types addObject:@(TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector)];
     }
 
     self.cellTypes = types;
@@ -92,36 +85,11 @@
     NSString *locationNameToShow = nil;
     BOOL loading = NO;
 
-    switch (self.locationStatus) {
-        case TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown:
-        case TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission:
-        case TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved:
-            locationNameToShow = [TSELocalized localizedString:TSEUI_LOCALIZABLE_SHARE_EXT_NONE_VALUE];
-            loading = NO;
-            break;
-        case TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation:
-            locationNameToShow = nil;
-            loading = YES;
-            break;
-        case TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired:
-            locationNameToShow = self.selectedLocationName ?: [TSELocalized localizedString:TSEUI_LOCALIZABLE_SHARE_EXT_NONE_VALUE];
-            loading = NO;
-            break;
-    }
-
     self.locationSelectionCell.configurationName = [TSELocalized localizedString:TSEUI_LOCALIZABLE_SHARE_EXT_LOCATION];
     self.locationSelectionCell.currentConfigurationValue = locationNameToShow;
     self.locationSelectionCell.loading = loading;
 }
 
-- (void)setLocationStatus:(TWTRSETweetComposerTableViewDataSourceLocationStatus)locationStatus
-{
-    if (_locationStatus != locationStatus) {
-        _locationStatus = locationStatus;
-
-        [self configureLocationSelectionCell];
-    }
-}
 
 - (void)setSelectedLocationName:(NSString *)selectedLocationName
 {

@@ -21,7 +21,6 @@
 @protocol TWTRSEAccount;
 @protocol TWTRSEAutoCompletion;
 @protocol TWTRSECardPreviewProvider;
-@protocol TWTRSEGeoTagging;
 @protocol TWTRSEImageDownloader;
 @protocol TWTRSELocalizedResources;
 @protocol TWTRSENetworking;
@@ -36,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSArray<id<TWTRSEAccount>> *accounts;
 @property (nonatomic, readonly, nullable) id<TWTRSEAccount> initiallySelectedAccount;
 @property (nonatomic, readonly, copy, nullable) TWTRSETweet *initialTweet;
-@property (nonatomic, readonly, nullable) id<TWTRSEGeoTagging> geoTagging;
 @property (nonatomic, readonly, nullable) id<TWTRSEAutoCompletion> autoCompletion;
 @property (nonatomic, readonly, nullable) id<TWTRSECardPreviewProvider> cardPreviewProvider;
 @property (nonatomic, readonly) id<TWTRSEImageDownloader> imageDownloader;
@@ -48,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param initialTweet (optional): The details of the tweet to prepopulate.
  @param accounts (required): The list of accounts to choose from which to tweet. If empty, the UI will present an alert with an error and not allow to use the composer.
  @param initiallySelectedAccount (optional): The account to default the selection too. If nil, the first account in `accounts` is selected initially. If provided, this must be an object in `accounts`.
- @param geoTagging (optional): An object that can provide places to geo-tag the tweet. If nil, the location option won't be present.
  @param autoCompletion (optional): An object that can provide user and hashtag autoCompletion. If nil, the autoCompletion UI won't be shown.
  @param cardPreviewProvider (optional): An object that can provide a card preview image. If nil, the cardPreview UI will rely on the itemProvider to retrieve an image
  @param imageDownloader (required): An object that can download images (used to retrieve user avatars).
@@ -60,7 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithInitialTweet:(nullable TWTRSETweet *)initialTweet
                             accounts:(NSArray<id<TWTRSEAccount>> *)accounts
             initiallySelectedAccount:(nullable id<TWTRSEAccount>)initiallySelectedAccount
-                          geoTagging:(nullable id<TWTRSEGeoTagging>)geoTagging
                       autoCompletion:(nullable id<TWTRSEAutoCompletion>)autoCompletion
                  cardPreviewProvider:(nullable id<TWTRSECardPreviewProvider>)cardPreviewProvider
                      imageDownloader:(id<TWTRSEImageDownloader>)imageDownloader

@@ -21,8 +21,6 @@
 
 typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceCellType) { TWTRSETweetComposerTableViewDataSourceCellTypeAccountSelector = 1, TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector };
 
-typedef NS_ENUM(NSUInteger, TWTRSETweetComposerTableViewDataSourceLocationStatus) { TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown = 1, TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission, TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved, TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation, TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired };
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TWTRSETweetComposerTableViewDataSource : NSObject <TWTRSETweetTextViewContainerDelegate, UITableViewDataSource>
@@ -30,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, weak) TWTRSETweetTextViewContainer *tweetTextViewContainer;
 
 @property (nonatomic, copy, nullable) NSString *currentAccountUsername;
-@property (nonatomic) TWTRSETweetComposerTableViewDataSourceLocationStatus locationStatus;
 @property (nonatomic, copy, nullable) NSString *selectedLocationName;
 
 /**
@@ -52,9 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
  Creates a data source to be used with the composer table view.
 
  @param config (required): includes initialTweet, fonts, other information
- @param allowsGeoTagging Whether to show the location selection option in the table view.
  */
-- (instancetype)initWithConfiguration:(TWTRSETweetShareConfiguration *)config allowsGeoTagging:(BOOL)allowsGeoTagging NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConfiguration:(TWTRSETweetShareConfiguration *)config NS_DESIGNATED_INITIALIZER;
 
 - (void)registerCellClassesInTableView:(UITableView *)tableView;
 

@@ -24,7 +24,6 @@
 - (instancetype)initWithInitialTweet:(TWTRSETweet *)initialTweet
                             accounts:(NSArray<id<TWTRSEAccount>> *)accounts
             initiallySelectedAccount:(id<TWTRSEAccount>)initiallySelectedAccount
-                          geoTagging:(id<TWTRSEGeoTagging>)geoTagging
                       autoCompletion:(id<TWTRSEAutoCompletion>)autoCompletion
                  cardPreviewProvider:(id<TWTRSECardPreviewProvider>)cardPreviewProvider
                      imageDownloader:(id<TWTRSEImageDownloader>)imageDownloader
@@ -46,7 +45,6 @@
         _initialTweet = [initialTweet copy];
         _accounts = [accounts copy];
         _initiallySelectedAccount = initiallySelectedAccount;
-        _geoTagging = geoTagging;
         _autoCompletion = autoCompletion;
         _cardPreviewProvider = cardPreviewProvider;
         _imageDownloader = imageDownloader;

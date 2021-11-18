@@ -28,7 +28,6 @@ FOUNDATION_EXTERN const unsigned char TwitterShareExtensionUIVersionString[];
 #import "TWTRSECardPreviewProvider.h"
 #import "TWTRSEFonts.h"
 #import "TWTRSEGeoPlace.h"
-#import "TWTRSEGeoTagging.h"
 #import "TWTRSEImageDownloader.h"
 #import "TWTRSEImageProvider.h"
 #import "TWTRSELocalizedResources.h"

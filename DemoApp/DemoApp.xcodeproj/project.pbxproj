@@ -910,7 +910,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Vendor";
 				HEADER_SEARCH_PATHS = "\"$PODS_CONFIGURATION_BUILD_DIR/Headers\"";
 				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twitter.twitterkit.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -933,7 +933,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Vendor";
 				HEADER_SEARCH_PATHS = "\"$PODS_CONFIGURATION_BUILD_DIR/Headers\"";
 				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twitter.twitterkit.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

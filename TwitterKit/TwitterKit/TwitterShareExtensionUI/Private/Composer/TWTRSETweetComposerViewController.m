@@ -192,7 +192,7 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     if ((self = [super initWithNibName:nil bundle:nil])) {
         _configuration = configuration;
 
-        _dataSource = [[TWTRSETweetComposerTableViewDataSource alloc] initWithConfiguration:configuration allowsGeoTagging:[self isLocationSelectionAvailable]];
+        _dataSource = [[TWTRSETweetComposerTableViewDataSource alloc] initWithConfiguration:configuration];
 
         _tweetTextViewContainer = [[TWTRSETweetTextViewContainer alloc] init];
         _tweetTextViewContainer.delegate = _dataSource;
@@ -246,11 +246,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     if (self.registeredForTweetTextKVO) {
         [self.dataSource removeObserver:self forKeyPath:[NSString stringWithFormat:@"%@.%@", NSStringFromSelector(@selector(composedTweet)), NSStringFromSelector(@selector(text))]];
     }
-}
-
-- (BOOL)isLocationSelectionAvailable
-{
-    return _configuration.geoTagging != nil;
 }
 
 - (BOOL)isAutoCompletionAvailable

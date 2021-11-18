@@ -79,7 +79,7 @@ UIImage *videoThumbnail(NSURL *url)
     TWTRSETweet *tweet = [self tweetWithText:text attachment:attachment image:image];
 
     // Shared Composer
-    TWTRSETweetShareConfiguration *config = [[TWTRSETweetShareConfiguration alloc] initWithInitialTweet:tweet accounts:accounts initiallySelectedAccount:[accounts lastObject] geoTagging:nil autoCompletion:nil cardPreviewProvider:nil imageDownloader:[self imageLoader] localizedResources:[TWTRLocalizedResources class] networking:self.networking twitterText:[TWTRTwitterText class] wordRangeCalculator:[NSString class] delegate:self];
+    TWTRSETweetShareConfiguration *config = [[TWTRSETweetShareConfiguration alloc] initWithInitialTweet:tweet accounts:accounts initiallySelectedAccount:[accounts lastObject]  autoCompletion:nil cardPreviewProvider:nil imageDownloader:[self imageLoader] localizedResources:[TWTRLocalizedResources class] networking:self.networking twitterText:[TWTRTwitterText class] wordRangeCalculator:[NSString class] delegate:self];
 
     self = [super initWithConfiguration:config];
 

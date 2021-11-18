@@ -98,10 +98,8 @@
 #import "TWTRSEAccountSelectionTableViewController.h"
 #import "TWTRSEAutoCompletionTableViewController.h"
 #import "TWTRSEFonts.h"
-#import "TWTRSEFrameworkLazyLoading.h"
 #import "TWTRSEGeoPlace.h"
 #import "TWTRSELocalizedString.h"
-#import "TWTRSELocationSelectionTableViewController.h"
 #import "TWTRSENetworking.h"
 #import "TWTRSETweet.h"
 #import "TWTRSETweetAttachment.h"
@@ -114,8 +112,6 @@
 
 #import <TwitterCore/TWTRColorUtil.h>
 
-@import CoreLocation;
-
 #pragma mark - static const definitions
 
 static const CGFloat kEnoughRowsToImplyScrollableTable = (CGFloat)1.85;
@@ -123,7 +119,7 @@ static const CGFloat kTwoTableViewRows = (CGFloat)2.0;
 
 #pragma mark -
 
-@interface TWTRSETweetComposerViewController () <UITableViewDelegate, TWTRSEAccountSelectionDelegate, CLLocationManagerDelegate, TWTRSELocationSelectionDelegate, TWTRSEAutoCompletionTableViewControllerDelegate>
+@interface TWTRSETweetComposerViewController () <UITableViewDelegate, TWTRSEAccountSelectionDelegate, TWTRSEAutoCompletionTableViewControllerDelegate>
 
 @property (nonatomic, nonnull, readonly) UIScrollView *scrollView;
 @property (nonatomic, nonnull, readonly) UIView *contentView;
@@ -143,13 +139,10 @@ static const CGFloat kTwoTableViewRows = (CGFloat)2.0;
 @property (nonatomic, nonnull, readonly) UIBarButtonItem *tweetBarButtonItem;
 @property (nonatomic, nonnull, readonly) UIBarButtonItem *spinnerBarButtonItem;
 @property (nonatomic, nonnull) id<TWTRSEAccount> selectedAccount;
-@property (nonatomic, nullable, readonly) CLLocationManager *locationManager;
-@property (nonatomic, nullable) CLLocation *mostRecentLocation;
 @property (nonatomic, readonly, getter=isAutoCompletionResultsDisplayAllowed) BOOL autoCompletionResultsDisplayAllowed;
 @property (nonatomic) BOOL disallowAutocompletionVisible;
 @property (nonatomic) BOOL waitingForLocation;
 @property (nonatomic, nullable) id<TWTRSEGeoPlace> selectedGeoPlace;
-@property (nonatomic) TWTRSETweetComposerTableViewDataSourceLocationStatus locationStatus;
 
 @property (nonatomic) BOOL autoCompletionResultsVisible;
 @property (nonatomic, nullable, readonly) TWTRSEAutoCompletionTableViewController *autoCompletionResultsViewController;
@@ -197,8 +190,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     NSParameterAssert(configuration);
 
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        twtr_ensureFrameworksLoadedAtRuntime();
-
         _configuration = configuration;
 
         _dataSource = [[TWTRSETweetComposerTableViewDataSource alloc] initWithConfiguration:configuration allowsGeoTagging:[self isLocationSelectionAvailable]];
@@ -220,13 +211,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [spinner startAnimating];
         _spinnerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
-
-        if ([self isLocationSelectionAvailable]) {
-            _locationManager = [[CLLocationManager alloc] init];
-            _locationManager.delegate = self;
-        }
-
-        _locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown;
 
         if ([self isAutoCompletionAvailable]) {
             _autoCompletionResultsViewController = [[TWTRSEAutoCompletionTableViewController alloc] initWithAutoCompletion:configuration.autoCompletion imageDownloader:configuration.imageDownloader delegate:self];
@@ -521,98 +505,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     }
 }
 
-- (void)setMostRecentLocation:(CLLocation *)mostRecentLocation
-{
-    _mostRecentLocation = mostRecentLocation;
-
-    [self updateLocationStatus];
-}
-
-- (void)setWaitingForLocation:(BOOL)waitingForLocation
-{
-    if (waitingForLocation != _waitingForLocation) {
-        _waitingForLocation = waitingForLocation;
-
-        [self updateLocationStatus];
-    }
-}
-
-- (void)setLocationStatus:(TWTRSETweetComposerTableViewDataSourceLocationStatus)locationStatus
-{
-    if (locationStatus != _locationStatus) {
-        const TWTRSETweetComposerTableViewDataSourceLocationStatus previousLocationStatus = self.locationStatus;
-
-        _locationStatus = locationStatus;
-
-        self.dataSource.locationStatus = locationStatus;
-
-        const BOOL justAcquiredLocation = previousLocationStatus == TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation && locationStatus == TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired;
-
-        if (justAcquiredLocation && self.waitingForLocation) {
-            [self pushLocationSelectionViewController];
-        }
-    }
-}
-
-- (void)updateLocationStatus
-{
-    switch ([CLLocationManager authorizationStatus]) {
-        case kCLAuthorizationStatusNotDetermined:
-            self.locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown;
-            break;
-        case kCLAuthorizationStatusRestricted:
-        case kCLAuthorizationStatusDenied:
-            self.locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission;
-            break;
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-            if (self.mostRecentLocation != nil) {
-                self.locationStatus = TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired;
-            } else {
-                self.locationStatus = self.waitingForLocation ? TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation : TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved;
-            }
-            break;
-    }
-}
-
-- (void)_tseui_requestLocation
-{
-    self.waitingForLocation = YES;
-    [self.locationManager requestLocation];
-}
-
-- (void)_tseui_requestLocationPermission
-{
-    NSAssert([[self class] _tseui_applicationHasLocationUsageReasonInInfoPlist], @"NSLocationWhenInUseUsageDescription key must be set in Info.plist file for location to work. TODO: Figure out what to do for Fabric.");
-
-    [self.locationManager requestWhenInUseAuthorization];
-}
-
-+ (BOOL)_tseui_applicationHasLocationUsageReasonInInfoPlist
-{
-    return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"] != nil;
-}
-
-- (void)_tseui_presentNoLocationPermissionAlert
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[TSELocalized localizedString:TSEUI_LOCALIZABLE_LOCATION_SERVICES_ACCESS_DENIED_ALERT_TITLE] message:[TSELocalized localizedString:TSEUI_LOCALIZABLE_LOCATION_SERVICES_ACCESS_DENIED_ALERT_MESSAGE] preferredStyle:UIAlertControllerStyleAlert];
-
-    [alertController addAction:[UIAlertAction actionWithTitle:[TSELocalized localizedString:TSEUI_LOCALIZABLE_OK_ACTION_LABEL]
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:^(UIAlertAction *_Nonnull action) {
-                                                          [alertController dismissViewControllerAnimated:true completion:nil];
-                                                      }]];
-
-    [self presentViewController:alertController animated:true completion:nil];
-}
-
-- (void)pushLocationSelectionViewController
-{
-    self.disallowAutocompletionVisible = YES;
-    TWTRSELocationSelectionTableViewController *locationSelectionViewController = [[TWTRSELocationSelectionTableViewController alloc] initWithCurrentLocation:self.mostRecentLocation geoTagging:_configuration.geoTagging currentlySelectedPlace:self.selectedGeoPlace delegate:self];
-
-    [self.navigationController showViewController:locationSelectionViewController sender:self];
-}
 
 #pragma mark - AutoCompletion
 
@@ -724,30 +616,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     [self.navigationController showViewController:accountSelectionViewController sender:self];
 }
 
-- (void)_tseui_handleLocationSelectionRowTap
-{
-    if (self.mostRecentLocation != nil) {
-        [self pushLocationSelectionViewController];
-    } else {
-        switch (self.locationStatus) {
-            case TWTRSETweetComposerTableViewDataSourceLocationStatusUnknown:
-                [self _tseui_requestLocationPermission];
-                break;
-            case TWTRSETweetComposerTableViewDataSourceLocationStatusNoPermission:
-                [self _tseui_presentNoLocationPermissionAlert];
-                break;
-            case TWTRSETweetComposerTableViewDataSourceLocationStatusPermissionApproved:
-                [self _tseui_requestLocation];
-                break;
-            case TWTRSETweetComposerTableViewDataSourceLocationStatusAcquiringLocation:
-                break;
-            case TWTRSETweetComposerTableViewDataSourceLocationStatusLocationAcquired:
-                NSAssert(false, @"The impossible happened. self.mostRecentLocation shouldn't be nil");
-                break;
-        }
-    }
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -761,7 +629,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
         }
 
         case TWTRSETweetComposerTableViewDataSourceCellTypeLocationSelector: {
-            [self _tseui_handleLocationSelectionRowTap];
             [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 
             return;
@@ -781,45 +648,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
     }
 
     [self.navigationController popToViewController:self animated:YES];
-}
-
-#pragma mark - TWTRSELocationSelectionDelegate
-
-- (void)locationSelectionTableViewController:(TWTRSELocationSelectionTableViewController *)locationSelectionTableViewController didSelectLocation:(id<TWTRSEGeoPlace>)location
-{
-    BOOL isChangedLocation = (!location.placeID && self.selectedGeoPlace.placeID) || (location.placeID && ![self.selectedGeoPlace.placeID isEqualToString:location.placeID]);
-    if (isChangedLocation) {
-        self.selectedGeoPlace = location;
-    }
-
-    [self.navigationController popToViewController:self animated:YES];
-}
-
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    [self updateLocationStatus];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
-{
-    CLLocation *lastLocation = locations.lastObject;
-
-    self.mostRecentLocation = lastLocation;
-
-    if (self.mostRecentLocation != nil && self.waitingForLocation) {
-        self.waitingForLocation = NO;
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    // TODO: Pipe logs outside of the framework?
-    NSLog(@"Location Manager error: %@", error);
-
-    _disallowAutocompletionVisible = NO;
-    _waitingForLocation = NO;
 }
 
 #pragma mark - TWTRSEAutoCompletionTableViewControllerDelegate

@@ -17,7 +17,6 @@
 
 @import Foundation;
 
-@class CLLocation;
 @protocol TWTRSEGeoPlace;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,7 +25,7 @@ typedef void (^TWTRSEGeoTaggingCompletion)(NSArray<id<TWTRSEGeoPlace>> *_Nullabl
 
 @protocol TWTRSEGeoTagging <NSObject>
 
-- (void)loadPlacesNearLocation:(CLLocation *)location withCompletion:(TWTRSEGeoTaggingCompletion)completion;
+- (void)loadPlacesNearLocation:(id)location withCompletion:(TWTRSEGeoTaggingCompletion)completion;
 
 @end
 

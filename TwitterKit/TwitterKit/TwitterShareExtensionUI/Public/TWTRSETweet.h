@@ -18,7 +18,6 @@
 @import Foundation;
 
 @protocol TWTRSETweetAttachment;
-@protocol TWTRSEGeoPlace;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,17 +41,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSNumber *inReplyToTweetID;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, nullable) id<TWTRSETweetAttachment> attachment;
-@property (nonatomic, nullable) id<TWTRSEGeoPlace> place;
 
 /**
  @param inReplyToTweetID (Optional) The tweet ID this tweet is a reply of.
  @param text The text contents of the tweet, not counting prefixing screennames or hashtags.
  @param attachment (Optional): See specific implementations of the `TWTRSETweetAttachment` protocol.
- @param place (Optional): The place where this tweet is geo-tagged.
  @param usernames (Optional): An array of usernames without leading "@" that are mentioned in this tweet.
  @param hashtags (Optional): An array of hashtags without leading "#" that are included in this tweet.
  */
-- (instancetype)initWithInReplyToTweetID:(nullable NSNumber *)inReplyToTweetID text:(nullable NSString *)text attachment:(nullable id<TWTRSETweetAttachment>)attachment place:(nullable id<TWTRSEGeoPlace>)place usernames:(nullable NSArray<NSString *> *)usernames hashtags:(nullable NSArray<NSString *> *)hashtags NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithInReplyToTweetID:(nullable NSNumber *)inReplyToTweetID text:(nullable NSString *)text attachment:(nullable id<TWTRSETweetAttachment>)attachment  usernames:(nullable NSArray<NSString *> *)usernames hashtags:(nullable NSArray<NSString *> *)hashtags NS_DESIGNATED_INITIALIZER;
 
 + (TWTRSETweet *)emptyTweet;
 

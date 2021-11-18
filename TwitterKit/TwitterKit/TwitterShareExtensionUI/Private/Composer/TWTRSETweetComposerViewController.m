@@ -98,7 +98,6 @@
 #import "TWTRSEAccountSelectionTableViewController.h"
 #import "TWTRSEAutoCompletionTableViewController.h"
 #import "TWTRSEFonts.h"
-#import "TWTRSEGeoPlace.h"
 #import "TWTRSELocalizedString.h"
 #import "TWTRSENetworking.h"
 #import "TWTRSETweet.h"
@@ -142,7 +141,6 @@ static const CGFloat kTwoTableViewRows = (CGFloat)2.0;
 @property (nonatomic, readonly, getter=isAutoCompletionResultsDisplayAllowed) BOOL autoCompletionResultsDisplayAllowed;
 @property (nonatomic) BOOL disallowAutocompletionVisible;
 @property (nonatomic) BOOL waitingForLocation;
-@property (nonatomic, nullable) id<TWTRSEGeoPlace> selectedGeoPlace;
 
 @property (nonatomic) BOOL autoCompletionResultsVisible;
 @property (nonatomic, nullable, readonly) TWTRSEAutoCompletionTableViewController *autoCompletionResultsViewController;
@@ -486,18 +484,6 @@ static void *TSETweetTextKVOCOntext = &TSETweetTextKVOCOntext;
                                                       }]];
 
     [self presentViewController:alertController animated:true completion:nil];
-}
-
-#pragma mark - Location State Machine
-
-- (void)setSelectedGeoPlace:(id<TWTRSEGeoPlace>)selectedGeoPlace
-{
-    if (selectedGeoPlace != _selectedGeoPlace) {
-        _selectedGeoPlace = selectedGeoPlace;
-
-        self.dataSource.composedTweet.place = selectedGeoPlace;
-        self.dataSource.selectedLocationName = selectedGeoPlace.name;
-    }
 }
 
 

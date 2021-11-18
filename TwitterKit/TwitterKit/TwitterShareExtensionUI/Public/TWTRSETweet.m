@@ -37,12 +37,11 @@ static Class<TwitterTextProtocol> sTwitterTextClass;
     return sTwitterTextClass;
 }
 
-- (instancetype)initWithInReplyToTweetID:(NSNumber *)inReplyToTweetID text:(NSString *)text attachment:(id<TWTRSETweetAttachment>)attachment place:(id<TWTRSEGeoPlace>)place usernames:(NSArray<NSString *> *)usernames hashtags:(NSArray<NSString *> *)hashtags
+- (instancetype)initWithInReplyToTweetID:(NSNumber *)inReplyToTweetID text:(NSString *)text attachment:(id<TWTRSETweetAttachment>)attachment usernames:(NSArray<NSString *> *)usernames hashtags:(NSArray<NSString *> *)hashtags
 {
     if ((self = [super init])) {
         _inReplyToTweetID = [inReplyToTweetID copy];
         _attachment = attachment;
-        _place = place;
 
         _text = [self textWithLeadingUsernames:usernames hashtags:hashtags text:text];
     }
@@ -52,7 +51,7 @@ static Class<TwitterTextProtocol> sTwitterTextClass;
 
 + (TWTRSETweet *)emptyTweet
 {
-    return [[self alloc] initWithInReplyToTweetID:nil text:@"" attachment:nil place:nil usernames:nil hashtags:nil];
+    return [[self alloc] initWithInReplyToTweetID:nil text:@"" attachment:nil usernames:nil hashtags:nil];
 }
 
 - (nullable NSString *)textWithAttachmentURLs
@@ -97,7 +96,7 @@ static Class<TwitterTextProtocol> sTwitterTextClass;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    return [[TWTRSETweet alloc] initWithInReplyToTweetID:self.inReplyToTweetID text:self.text attachment:self.attachment place:self.place usernames:nil hashtags:nil];
+    return [[TWTRSETweet alloc] initWithInReplyToTweetID:self.inReplyToTweetID text:self.text attachment:self.attachment usernames:nil hashtags:nil];
 }
 
 @end

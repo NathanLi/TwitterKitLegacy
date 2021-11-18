@@ -141,7 +141,7 @@ UIImage *videoThumbnail(NSURL *url)
 {
     id<TWTRSETweetAttachment> tweetAttachment = attachment ?: [self attachmentWithImage:image];
 
-    return [[TWTRSETweet alloc] initWithInReplyToTweetID:nil text:text attachment:tweetAttachment place:nil usernames:nil hashtags:nil];
+    return [[TWTRSETweet alloc] initWithInReplyToTweetID:nil text:text attachment:tweetAttachment usernames:nil hashtags:nil];
 }
 
 - (TWTRSETweetAttachmentImage *)attachmentWithImage:(UIImage *)image

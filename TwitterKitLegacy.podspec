@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "TwitterKitLegacy"
-  s.version = "3.5.0"
+  s.version = "3.6.0"
   s.summary = "Increase user engagement and app growth."
   s.homepage = "https://github.com/twitter/twitter-kit-ios"
   s.documentation_url = "https://github.com/twitter/twitter-kit-ios/wiki"
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.prefix_header_file = "TwitterKit/TwitterKit/Supporting Files/TwitterKit-Prefix.pch"
   s.resources = ["TwitterKit/TwitterKitResources.bundle"]
   s.frameworks = "CoreText", "QuartzCore", "CoreData", "CoreGraphics", "Foundation", "Security", "UIKit", "CoreMedia", "AVFoundation", "SafariServices", "WebKit"
-  s.dependency "TwitterCoreLegacy", ">= 3.5.0"
+  s.dependency "TwitterCoreLegacy", ">= 3.6.0"
 end

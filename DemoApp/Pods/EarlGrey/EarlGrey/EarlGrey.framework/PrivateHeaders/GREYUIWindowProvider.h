@@ -16,6 +16,8 @@
 
 #import <EarlGrey/GREYProvider.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  A provider for UIApplication windows. By default, all application windows are returned unless
  *  this provider is initialized with custom windows.
@@ -32,7 +34,7 @@
 + (instancetype)providerWithWindows:(NSArray *)windows;
 
 /**
- *  Class method to get a provider with all the windows currently registed with the app.
+ *  Class method to get a provider with all the windows currently registered with the app.
  *
  *  @return A GREYUIWindowProvider instance populated by all windows currently
  *          registered with the app.
@@ -53,7 +55,7 @@
  *
  *  @return A GREYUIWindowProvider instance, populated with the specified windows.
  */
-- (instancetype)initWithWindows:(NSArray *)windows NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithWindows:(NSArray *_Nullable)windows NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Initializes this provider with all application windows.
@@ -78,3 +80,5 @@
 - (NSEnumerator *)dataEnumerator;
 
 @end
+
+NS_ASSUME_NONNULL_END

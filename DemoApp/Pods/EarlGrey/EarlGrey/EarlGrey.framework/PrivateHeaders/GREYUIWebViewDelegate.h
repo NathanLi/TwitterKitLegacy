@@ -14,8 +14,13 @@
 // limitations under the License.
 //
 
-#import <EarlGrey/GREYSurrogateDelegate.h>
 #import <UIKit/UIKit.h>
+
+#if !defined(__IPHONE_12_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_12_0
+
+#import "Delegate/GREYSurrogateDelegate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  A UIWebView delegate proxy used to intercept load requests for syncing.
@@ -36,3 +41,7 @@
 - (instancetype)initWithOriginalUIWebViewDelegate:(id)originalDelegate;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#endif  // !defined(__IPHONE_12_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_12_0

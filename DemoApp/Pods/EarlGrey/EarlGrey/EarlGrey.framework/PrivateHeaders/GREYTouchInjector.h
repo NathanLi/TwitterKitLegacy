@@ -14,7 +14,15 @@
 // limitations under the License.
 //
 
-#import <EarlGrey/GREYTouchInfo.h>
+#import <Foundation/Foundation.h>
+
+#import <EarlGrey/GREYDefines.h>
+#import "Event/GREYTouchInfo.h"
+
+/**
+ *  The frequency at which touches will be injected per second. Currently set to 60Hz.
+ */
+GREY_EXTERN const NSTimeInterval kGREYTouchInjectionFrequency;
 
 /**
  *  State for touch injector.
@@ -34,6 +42,8 @@ typedef NS_ENUM(NSInteger, GREYTouchInjectorState) {
    */
   kGREYTouchInjectorStopped,
 };
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  A touch injector that delivers a complete touch sequence for single finger interactions.
@@ -61,7 +71,7 @@ typedef NS_ENUM(NSInteger, GREYTouchInjectorState) {
  *
  *  @param touchInfo The info that is used to create the UITouch. If it represents a last touch
  *                   in a sequence, the specified @c point value is ignored and injector
- *                   automatically picks the previous point where touch occured to deliver
+ *                   automatically picks the previous point where touch occurred to deliver
  *                   the last touch.
  */
 - (void)enqueueTouchInfoForDelivery:(GREYTouchInfo *)touchInfo;
@@ -82,3 +92,5 @@ typedef NS_ENUM(NSInteger, GREYTouchInjectorState) {
 - (void)waitUntilAllTouchesAreDeliveredUsingInjector;
 
 @end
+
+NS_ASSUME_NONNULL_END

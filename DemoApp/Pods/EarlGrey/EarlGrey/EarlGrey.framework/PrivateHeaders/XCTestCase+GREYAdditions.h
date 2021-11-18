@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  Posted immediately prior to XCTestCase::setUp. The @c userInfo dictionary contains
  *  the executing XCTestCase.
@@ -106,8 +108,8 @@ typedef NS_ENUM(NSUInteger, GREYXCTestCaseStatus) {
  *  Interrupts the current test case execution immediately and triggers XCTest's error handling
  *  mechanism to invoke the appropriate methods to tear down the test.
  *
- *  @param line        Line number at which the failure occured.
- *  @param file        Name of the file in which the failure occured.
+ *  @param line        Line number at which the failure occurred.
+ *  @param file        Name of the file in which the failure occurred.
  *  @param description Full description of the failure.
  */
 - (void)grey_markAsFailedAtLine:(NSUInteger)line
@@ -120,5 +122,13 @@ typedef NS_ENUM(NSUInteger, GREYXCTestCaseStatus) {
  */
 - (NSString *)grey_localizedTestOutputsDirectory;
 
+/**
+ *  Sets the value for the test status.
+ *
+ *  @param status The new object-association value for the test status.
+ */
+- (void)grey_setStatus:(GREYXCTestCaseStatus)status;
+
 @end
 
+NS_ASSUME_NONNULL_END
